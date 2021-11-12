@@ -1,16 +1,19 @@
-import Editor, { monaco } from "@monaco-editor/react";
-import React, { useEffect, useRef, useState } from "react";
-import { remote, ipcRenderer } from "electron";
-import Button from "react-bootstrap/Button";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
+import Editor from "@monaco-editor/react";
+import React, { useEffect,
+                //useRef,
+                useState } from "react";
+import { ipcRenderer } from "electron";
+//import { remote } from "electron";
+//import Button from "react-bootstrap/Button";
+//import NavDropdown from "react-bootstrap/NavDropdown";
+//import Navbar from "react-bootstrap/Navbar";
+//import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import TopBar from "./TopBar";
 
-const { BrowserWindow, dialog, Menu } = remote;
+//const { BrowserWindow, dialog, Menu } = remote;
 const defaultCode = {
     content: "<empty>"
 };
@@ -27,18 +30,19 @@ const onEditorReady = (m) => (
         contextMenuGroupId: "9_cutcopypaste",
         run: editor => {
             alert("Add your custom pasting code here");
+            editor.focus()
         }
     });
 };
 
 export default function MainScreen() {
     const [code, setCode] = useState(defaultCode);
-    ipcRenderer.on("file-loaded", (event, arg) => {
+    ipcRenderer.on("file-loaded", (_, arg) => {
         setCode(arg);
     });
     useEffect(() => {
         if (!code.filename) {
-            ipcRenderer.send("read-file", "~/.bashrc");
+            //ipcRenderer.send("read-file", "~/.bashrc");
         }
     })
     return (
