@@ -21,8 +21,9 @@ let mainWindow;
 function createMainWindow() {
   const window = new BrowserWindow({
     webPreferences: {
-      nodeIntegration: true,
-      enableRemoteModule: true
+        nodeIntegration: true,
+        enableRemoteModule: true,
+        contextIsolation:false,
     }
   });
 

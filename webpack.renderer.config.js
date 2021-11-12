@@ -10,8 +10,8 @@ const srcPath = path.resolve(__dirname, "src");
 const PRODUCTION = process.env.NODE_ENV === "production"
 
 module.exports = {
-    //externals: [...Object.keys(dependencies || {})],
-    stats: "errors-only",
+    externals: [...Object.keys(dependencies || {})],
+//    stats: "errors-only",
     module: {
         rules: [
             {
@@ -32,7 +32,6 @@ module.exports = {
         modules: [srcPath, "node_modules"],
         alias: {
             renderer: path.resolve(__dirname, "src/renderer"),
-            main: path.resolve(__dirname, "src/main"),
         },
     },
     plugins: [
@@ -50,4 +49,5 @@ module.exports = {
 	    monacoEditorPath: path.resolve(__dirname, 'node_modules/monaco-editor')
         }),
     ],
+    target: 'electron-renderer'
 };

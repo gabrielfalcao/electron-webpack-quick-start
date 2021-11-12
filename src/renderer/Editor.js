@@ -3,7 +3,7 @@ import React, {
     useRef,
     useState,
 } from "react";
-import * as monaco from 'monaco-editor';
+//import * as monaco from 'monaco-editor';
 
 /* theme="vs-dark"
  * height={400}
@@ -18,7 +18,8 @@ export default function Editor(options = defaultOptions) {
     const [editor, setEditor] = useState(null);
 
     if (!editor && element) {
-        setEditor(monaco.editor.create(element, {...defaultOptions, ...options}))
+        //setEditor(monaco.editor.create(element, {...defaultOptions, ...options}))
+        element.current.innerHTML = options.value
     }
-    return <div ref={element}>{options.value}</div>
+    return <pre contentEditable ref={element}></pre>
 }
