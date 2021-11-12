@@ -10,6 +10,7 @@
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
   },
   "dependencies": {
+    "@babel/preset-env": "^7.16.0",
     "@emotion/css": "^11.5.0",
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",

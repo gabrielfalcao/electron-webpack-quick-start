@@ -1,4 +1,5 @@
-import Editor from "@monaco-editor/react";
+import * as path from 'path'
+//import Editor, {useMonaco} from "@monaco-editor/react";
 import React, { useEffect,
                 //useRef,
                 useState } from "react";
@@ -12,30 +13,28 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import TopBar from "./TopBar";
+import { loader } from "@monaco-editor/react";
+
+loader.config({ paths: { vs: path.resolve(__dirname, '../../node_modules/monaco-editor/min/vs') } });
 
 //const { BrowserWindow, dialog, Menu } = remote;
 const defaultCode = {
+    filename: undefined,
     content: "<empty>"
 };
 
-
-const onEditorReady = (m) => (
-    _getValue,
-    editor,
-) => {
-    editor.addAction({
-        id: "myPaste",
-        label: "423",
-        keybindings: [m.KeyMod.CtrlCmd | m.KeyCode.KEY_V],
-        contextMenuGroupId: "9_cutcopypaste",
-        run: editor => {
-            alert("Add your custom pasting code here");
-            editor.focus()
-        }
-    });
-};
-
+function Editor({value}) {
+    return <pre>{value}</pre>;
+}
 export default function MainScreen() {
+    //const monaco = useMonaco();
+
+    /* useEffect(() => {
+     *     if (monaco) {
+     *         console.log("here is the monaco instance:", monaco);
+     *     }
+     * }, [monaco]);
+     */
     const [code, setCode] = useState(defaultCode);
     ipcRenderer.on("file-loaded", (_, arg) => {
         setCode(arg);
@@ -52,9 +51,9 @@ export default function MainScreen() {
                 <Editor
                     theme="vs-dark"
                     height={400}
-                    language={"typescript"}
+                    language={"shell"}
                     value={code.content}
-                    editorDidMount={onEditorReady}
+
                 />
             )}
             <Container style={{marginTop: '0.75rem'}}>
