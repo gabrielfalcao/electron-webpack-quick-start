@@ -10,41 +10,43 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import TopBar from "./TopBar";
-import Editor from "./Editor";
+//import Editor from "./Editor";
+import MonacoEditor from '@uiw/react-monacoeditor';
 
 //const { BrowserWindow, dialog, Menu } = remote;
 const defaultCode = {
-  filename: undefined,
-  content: undefined
+    filename: undefined,
+    content: undefined
 };
 
 export default function MainScreen() {
-  //const monaco = useMonaco();
+    //const monaco = useMonaco();
 
-  /* useEffect(() => {
-   *     if (monaco) {
-   *         console.log("here is the monaco instance:", monaco);
-   *     }
-   * }, [monaco]);
-   */
-  const [code, setCode] = useState(defaultCode);
-  ipcRenderer.on("file-loaded", (_, arg) => {
-    setCode(arg);
-  });
-  useEffect(() => {
-    if (!code.filename) {
-      //ipcRenderer.send("read-file", "~/.bashrc");
-    }
-  });
-  return (
-    <>
-      <TopBar filename={code.filename} />
-      <Editor
-        theme="vs-dark"
-        height={400}
-        language={"shell"}
-        value={code.content || "#!/usr/bin/env bash\n"}
-      />
-    </>
-  );
+    /* useEffect(() => {
+     *     if (monaco) {
+     *         console.log("here is the monaco instance:", monaco);
+     *     }
+     * }, [monaco]);
+     */
+    const [code, setCode] = useState(defaultCode);
+    ipcRenderer.on("file-loaded", (_, arg) => {
+        setCode(arg);
+    });
+    useEffect(() => {
+        if (!code.filename) {
+            //ipcRenderer.send("read-file", "~/.bashrc");
+        }
+    });
+    return (
+        <>
+            <TopBar filename={code.filename} />
+            <MonacoEditor
+                language="shell"
+                value={code.content || "#!/usr/bin/env bash\n"}
+                options={{
+                    theme: 'vs-dark',
+                }}
+            />
+        </>
+    );
 }

@@ -8,10 +8,13 @@ const { dependencies } = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'pac
 
 const srcPath = path.resolve(__dirname, "src");
 const PRODUCTION = process.env.NODE_ENV === "production"
+const APP_DIR = path.resolve(__dirname, './src');
+const MONACO_DIR = path.resolve(__dirname, './node_modules/monaco-editor');
+
 
 module.exports = {
-    externals: [...Object.keys(dependencies || {})],
-//    stats: "errors-only",
+    //externals: [...Object.keys(dependencies || {})],
+    //    stats: "errors-only",
     module: {
         rules: [
             {
@@ -23,8 +26,14 @@ module.exports = {
             },
 	    {
 		test: /\.ttf$/,
+                include: MONACO_DIR,
 		use: ['file-loader']
-	    }
+	    },
+            {
+                test: /\.css$/,
+                include: MONACO_DIR,
+                use: ['style-loader', 'css-loader'],
+            }
         ],
     },
     resolve: {
