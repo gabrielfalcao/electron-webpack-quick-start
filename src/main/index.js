@@ -114,9 +114,13 @@ function resolveHome(filepath) {
   }
   return path.resolve(filepath);
 }
+
+function loadFileIntoRenderer(event, filename) {
+    const content = fs.readFileSync(resolveHome(filename), "utf-8");
+    event.reply("file-loaded", { content, filename });
+}
 ipcMain.on("read-file", (event, filename) => {
-  const content = fs.readFileSync(resolveHome(filename), "utf-8");
-  event.reply("file-loaded", { content, filename });
+    loadFileIntoRenderer(event, filename)
 });
 
 ipcMain.on("quit", (event, filename) => {
