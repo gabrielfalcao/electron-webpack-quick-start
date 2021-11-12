@@ -9,6 +9,31 @@ import Col from "react-bootstrap/Col";
 import { ipcRenderer } from "electron";
 
 const knownFiles = ["~/.bashrc", "~/.ssh/id_rsa.pub"];
+
+const dropdown = (
+  <NavDropdown title="Menu" id="basic-nav-dropdown">
+    {knownFiles.map((filename) => (
+      <NavDropdown.Item
+        key={filename}
+        onClick={() => {
+          ipcRenderer.send("read-file", filename);
+        }}
+      >
+        {filename}
+      </NavDropdown.Item>
+    ))}
+    <NavDropdown.Divider />
+    <NavDropdown.Item
+      onClick={() => {
+        if (confirm("Are you sure you want to quit?")) {
+          ipcRenderer.send("quit");
+        }
+      }}
+    >
+      Quit
+    </NavDropdown.Item>
+  </NavDropdown>
+);
 export default function TopBar({ filename }) {
   return (
     <Navbar bg="light" expand="sm">
@@ -16,28 +41,13 @@ export default function TopBar({ filename }) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           <Nav className="me-auto">
-            <NavDropdown title="Menu" id="basic-nav-dropdown">
-              {knownFiles.map(filename => (
-                <NavDropdown.Item
-                  key={filename}
-                  onClick={() => {
-                    ipcRenderer.send("read-file", filename);
-                  }}
-                >
-                  {filename}
-                </NavDropdown.Item>
-              ))}
-              <NavDropdown.Divider />
-              <NavDropdown.Item
-                onClick={() => {
-                  if (confirm("Are you sure you want to quit?")) {
-                    ipcRenderer.send("quit");
-                  }
-                }}
-              >
-                Quit
-              </NavDropdown.Item>
-            </NavDropdown>
+              {true && (<Nav.Link
+              onClick={() => {
+                ipcRenderer.send("read-file", "~/.bashrc");
+              }}
+            >
+              load ~/.bashrc
+            </Nav.Link>)}
           </Nav>
         </Navbar.Collapse>
         {filename ? <Navbar.Brand href="#home">{filename}</Navbar.Brand> : null}

@@ -1,8 +1,9 @@
-import * as path from 'path'
-//import Editor, {useMonaco} from "@monaco-editor/react";
-import React, { useEffect,
-                //useRef,
-                useState } from "react";
+import * as path from "path";
+import React, {
+  useEffect,
+    useRef,
+  useState,
+} from "react";
 import { ipcRenderer } from "electron";
 //import { remote } from "electron";
 //import Button from "react-bootstrap/Button";
@@ -13,56 +14,52 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import TopBar from "./TopBar";
-import { loader } from "@monaco-editor/react";
-
-loader.config({ paths: { vs: path.resolve(__dirname, '../../node_modules/monaco-editor/min/vs') } });
+import Editor from './Editor'
 
 //const { BrowserWindow, dialog, Menu } = remote;
 const defaultCode = {
-    filename: undefined,
-    content: "<empty>"
+  filename: undefined,
+  content: "<empty>",
 };
 
-function Editor({value}) {
-    return <pre>{value}</pre>;
-}
 export default function MainScreen() {
-    //const monaco = useMonaco();
+  //const monaco = useMonaco();
 
-    /* useEffect(() => {
-     *     if (monaco) {
-     *         console.log("here is the monaco instance:", monaco);
-     *     }
-     * }, [monaco]);
-     */
-    const [code, setCode] = useState(defaultCode);
-    ipcRenderer.on("file-loaded", (_, arg) => {
-        setCode(arg);
-    });
-    useEffect(() => {
-        if (!code.filename) {
-            //ipcRenderer.send("read-file", "~/.bashrc");
-        }
-    })
-    return (
-        <>
-            <TopBar filename={code.filename} />
-            {code.filename && (
-                <Editor
-                    theme="vs-dark"
-                    height={400}
-                    language={"shell"}
-                    value={code.content}
-
-                />
-            )}
-            <Container style={{marginTop: '0.75rem'}}>
-                <Row>
-                    <Col>
-                        <pre>{/*code.content*/}</pre>
-                    </Col>
-                </Row>
-            </Container>
-        </>
-    );
+  /* useEffect(() => {
+   *     if (monaco) {
+   *         console.log("here is the monaco instance:", monaco);
+   *     }
+   * }, [monaco]);
+   */
+  const [code, setCode] = useState(defaultCode);
+  ipcRenderer.on("file-loaded", (_, arg) => {
+    setCode(arg);
+  });
+  useEffect(() => {
+    if (!code.filename) {
+      //ipcRenderer.send("read-file", "~/.bashrc");
+    }
+  });
+  return (
+    <>
+      <TopBar filename={code.filename} />
+      {true && (
+        <Editor
+          theme="vs-dark"
+          height={400}
+          language={"shell"}
+          value={code.content || "#!/usr/bin/env bash\n"}
+        />
+      )}
+      {!code.filename ? (
+        <Container style={{ marginTop: "0.75rem" }}>
+          <Row>
+            <Col>
+              <p>empty</p>
+            </Col>
+          </Row>
+        </Container>
+      ) : null}
+    </>
+  );
 }
