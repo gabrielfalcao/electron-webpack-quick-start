@@ -10,16 +10,18 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import TopBar from "./TopBar";
+import StatusBar from "./StatusBar";
 import Editor from "./Editor";
 
 //const { BrowserWindow, dialog, Menu } = remote;
 const defaultCode = {
   filename: undefined,
-  content: "<empty>"
+  content: undefined,
+  language: "shell"
 };
 
 export default function MainScreen() {
-  //const monaco = useMonaco();
+  const [language, setLanguage] = useState("shell");
 
   /* useEffect(() => {
    *     if (monaco) {
@@ -37,14 +39,18 @@ export default function MainScreen() {
     }
   });
   return (
-    <>
-      <TopBar filename={code.filename} />
+    <Container fluid>
+      <TopBar
+        filename={code.filename}
+        language={language}
+        setLanguage={setLanguage}
+      />
       <Editor
         theme="vs-dark"
         height={400}
-        language={"shell"}
-        value={code.content || "#!/usr/bin/env bash\n"}
+        language={language}
+        value={code.content}
       />
-    </>
+    </Container>
   );
 }
