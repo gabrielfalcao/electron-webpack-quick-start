@@ -58,15 +58,15 @@ export default function Editor(options = defaultOptions) {
           ...options
         });
         setValue(options.value);
-        console.log({ value });
       }
       if (language !== options.language) {
+        setLanguage(options.language);
         loadEditor({
           ...defaultOptions,
           ...options
         });
-        setLanguage(options.language);
-        console.log({ language });
+      } else {
+        console.log({ language, value });
       }
     },
     [defaultOptions, options]

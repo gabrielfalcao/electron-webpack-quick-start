@@ -1,5 +1,7 @@
 {
-  "name": "electron-webpack-quick-start",
+  "name": "tesla-editor",
+  "author": "Gabriel Falcão",
+  "description": "monaco editor in react in electron",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
