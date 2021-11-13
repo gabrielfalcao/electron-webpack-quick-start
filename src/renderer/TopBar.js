@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+
 import Button from "react-bootstrap/Button";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Navbar from "react-bootstrap/Navbar";
@@ -12,7 +14,10 @@ const dropdownStyle = {
   border: "none",
   background: "#333",
   appearance: "none",
-  color: "white"
+  color: "white",
+  position: "absolute",
+  right: "0",
+  margin: "0.5rem 2rem 0 0"
 };
 const knownFiles = [
   "~/.bashrc",
@@ -65,7 +70,7 @@ export default function TopBar({ filename, language, setLanguage }) {
                 Quit
               </NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link>
+            <Nav.Item>
               <select
                 style={dropdownStyle}
                 defaultValue={language}
@@ -81,7 +86,7 @@ export default function TopBar({ filename, language, setLanguage }) {
                   </option>
                 ))}
               </select>
-            </Nav.Link>
+            </Nav.Item>
           </Nav>
           {filename ? <Navbar.Brand>{filename}</Navbar.Brand> : null}
         </Navbar.Collapse>

@@ -1,11 +1,8 @@
 import * as path from "path";
 import React, { useEffect, useRef, useState } from "react";
 import { ipcRenderer } from "electron";
-//import { remote } from "electron";
-//import Button from "react-bootstrap/Button";
-//import NavDropdown from "react-bootstrap/NavDropdown";
-//import Navbar from "react-bootstrap/Navbar";
-//import Nav from "react-bootstrap/Nav";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -13,6 +10,7 @@ import TopBar from "./TopBar";
 import StatusBar from "./StatusBar";
 import Editor from "./Editor";
 
+//import { remote } from "electron";
 //const { BrowserWindow, dialog, Menu } = remote;
 const defaultCode = {
   filename: undefined,
@@ -33,24 +31,17 @@ export default function MainScreen() {
   ipcRenderer.on("file-loaded", (_, arg) => {
     setCode(arg);
   });
-  useEffect(() => {
-    if (!code.filename) {
-      //ipcRenderer.send("read-file", "~/.bashrc");
-    }
-  });
+  const MainEditor = () => (
+    <Editor theme="vs-dark" language={language} value={code.content} />
+  );
   return (
-    <Container fluid>
+    <>
       <TopBar
         filename={code.filename}
         language={language}
         setLanguage={setLanguage}
       />
-      <Editor
-        theme="vs-dark"
-        height={400}
-        language={language}
-        value={code.content}
-      />
-    </Container>
+      <MainEditor />
+    </>
   );
 }
