@@ -17,9 +17,12 @@ const isDevelopment = process.env.NODE_ENV !== "production";
 
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
 let mainWindow;
-
+app.allowRendererProcessReuse = true;
 function createMainWindow() {
   const window = new BrowserWindow({
+    icon: path.resolve(__dirname, "app.ico"),
+    width: 1280,
+    height: 960,
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true
@@ -116,11 +119,11 @@ function resolveHome(filepath) {
 }
 
 function loadFileIntoRenderer(event, filename) {
-    const content = fs.readFileSync(resolveHome(filename), "utf-8");
-    event.reply("file-loaded", { content, filename });
+  const content = fs.readFileSync(resolveHome(filename), "utf-8");
+  event.reply("file-loaded", { content, filename });
 }
 ipcMain.on("read-file", (event, filename) => {
-    loadFileIntoRenderer(event, filename)
+  loadFileIntoRenderer(event, filename);
 });
 
 ipcMain.on("quit", (event, filename) => {
