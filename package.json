@@ -45,9 +45,7 @@
     "write-file-webpack-plugin": "^4.5.1"
   },
   "electronWebpack": {
-    "whiteListedModules": [
-      "monaco-editor"
-    ],
+    "whiteListedModules": ["monaco-editor"],
     "main": {
       "webpackConfig": "webpack.main.config.js"
     },
@@ -60,7 +58,7 @@
     "productName": "MyApp",
     "copyright": "Copyright © 2021 Gabriel Falcao",
     "mac": {
-      "icon": "./src/main/app.ico",
+      "icon": "./public/app.ico",
       "category": "public.app-category.utilities"
     },
     "files": [

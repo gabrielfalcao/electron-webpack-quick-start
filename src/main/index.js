@@ -20,7 +20,7 @@ let mainWindow;
 app.allowRendererProcessReuse = true;
 function createMainWindow() {
   const window = new BrowserWindow({
-    icon: path.resolve(__dirname, "app.ico"),
+    icon: path.resolve(__dirname, "../../public/app.ico"),
     width: 1280,
     height: 960,
     webPreferences: {
